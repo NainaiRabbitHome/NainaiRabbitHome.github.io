@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Odango Catcher</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <h1>おだんごキャッチャー</h1>
+      <section class="hud">
+        <div class="hud-item">
+          <span class="label">SCORE</span>
+          <span class="value" id="scoreValue">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="label">TIME</span>
+          <span class="value" id="timerValue">60.0</span>
+        </div>
+        <button id="startButton" type="button">スタート</button>
+      </section>
+      <section class="scene" id="scene">
+        <div class="rabbit" id="rabbitWrapper">
+          <img
+            src="./image/rabbit_anim1.png"
+            alt="うさぎ"
+            id="rabbitImage"
+            width="128"
+            height="128"
+          />
+          <img
+            src="./image/empty_container.png"
+            alt="おだんご容器"
+            id="containerImage"
+            width="64"
+            height="64"
+          />
+        </div>
+        <div class="drop-layer" id="dropLayer"></div>
+        <button
+          class="arrow arrow-left"
+          type="button"
+          data-direction="-1"
+          aria-label="左に移動"
+        >
+          ←
+        </button>
+        <button
+          class="arrow arrow-right"
+          type="button"
+          data-direction="1"
+          aria-label="右に移動"
+        >
+          →
+        </button>
+      </section>
+      <p class="helper">
+        PC: ←→ または A・D キーで移動／スマホ・タブレット: 矢印ボタンを長押し
+      </p>
+    </main>
+    <script src="./js/createLayout.js" defer></script>
+    <script src="./js/initGameState.js" defer></script>
+    <script src="./js/resetGameState.js" defer></script>
+    <script src="./js/registerKeyboard.js" defer></script>
+    <script src="./js/registerTouchButtons.js" defer></script>
+    <script src="./js/spawnOdango.js" defer></script>
+    <script src="./js/updateBackground.js" defer></script>
+    <script src="./js/updateRabbitAnimation.js" defer></script>
+    <script src="./js/updateContainerImage.js" defer></script>
+    <script src="./js/updateHud.js" defer></script>
+    <script src="./js/updateDrops.js" defer></script>
+    <script src="./js/startGameLogic.js" defer></script>
+    <script src="./src/main.js" defer></script>
+  </body>
+</html>

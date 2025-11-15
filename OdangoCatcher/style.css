@@ -1,0 +1,242 @@
+:root {
+  color-scheme: light;
+  font-family: "Hiragino Kaku Gothic ProN", "Segoe UI", system-ui,
+    -apple-system, sans-serif;
+  background-color: #fdfbfb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: radial-gradient(
+    circle at top,
+    #fdfbfb 0%,
+    #ebedee 60%,
+    #d7dbe8 100%
+  );
+  color: #2d3748;
+}
+
+.game-shell {
+  width: 100%;
+  max-width: 520px;
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #4c51bf;
+  letter-spacing: 0.05em;
+}
+
+.hud {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-item {
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(76, 81, 191, 0.15);
+  min-width: 110px;
+}
+
+.hud-item .label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #718096;
+}
+
+.hud-item .value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+#startButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #ff9770;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255, 151, 112, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#startButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+#startButton:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(255, 151, 112, 0.5);
+}
+
+.scene {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  min-height: 420px;
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+    180deg,
+    #a9d5ff 0%,
+    #e0f0ff 35%,
+    #f8fdf1 75%,
+    #f2eddc 100%
+  );
+  background-size: 800px 800px;
+  background-position: 0 0;
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 45px rgba(76, 81, 191, 0.2);
+}
+
+.scene::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 110px;
+  background: linear-gradient(
+    180deg,
+    rgba(215, 185, 130, 0.7) 0%,
+    rgba(180, 140, 90, 0.95) 90%
+  );
+  z-index: 0;
+}
+
+.drop-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rabbit {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  width: 128px;
+  height: 128px;
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  transition: transform 0.2s ease-out;
+  z-index: 2;
+}
+
+.rabbit.face-right {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+#rabbitImage {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  inset: 0;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+#containerImage {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  left: 32px;
+  top: -32px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 1.5rem;
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(76, 81, 191, 0.85);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(76, 81, 191, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 3;
+}
+
+.arrow-left {
+  left: 1.25rem;
+}
+
+.arrow-right {
+  right: 1.25rem;
+}
+
+.arrow.active,
+.arrow:focus-visible {
+  background: #ff9770;
+  outline: none;
+}
+
+.arrow:active {
+  transform: scale(0.95);
+}
+
+.helper {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.dango {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe3c8, #d18b47);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 768px) {
+  .game-shell {
+    padding-top: 3rem;
+  }
+
+  .scene {
+    max-height: 640px;
+  }
+}
