@@ -22,6 +22,9 @@ body {
     #d7dbe8 100%
   );
   color: #2d3748;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-shell {
