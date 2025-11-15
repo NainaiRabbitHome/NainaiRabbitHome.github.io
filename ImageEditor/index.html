@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Image Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>ブラウザ画像エディター</h1>
+      <p>オブジェクト管理とキャンバス編集をブラウザで完結</p>
+    </header>
+
+    <main class="app-body">
+      <section class="tab-controls" role="tablist">
+        <button class="tab-button active" data-tab="objects" type="button">オブジェクト</button>
+        <button class="tab-button" data-tab="canvas" type="button">キャンバス</button>
+      </section>
+
+      <section class="panels">
+        <div class="panel" data-panel="objects">
+          <div class="panel-section">
+            <h2>画像の追加</h2>
+            <label class="file-input">
+              <span>ファイルの追加</span>
+              <input type="file" id="imageLoader" accept="image/*" />
+            </label>
+          </div>
+
+          <div class="panel-section" id="objectList"></div>
+
+          <div class="panel-section" id="objectDetails"></div>
+        </div>
+
+        <div class="panel hidden" data-panel="canvas">
+          <div class="panel-section columns">
+            <label>
+              幅(px)
+              <input type="number" id="canvasWidth" min="1" value="512" />
+            </label>
+            <label>
+              高さ(px)
+              <input type="number" id="canvasHeight" min="1" value="512" />
+            </label>
+            <button id="applyCanvasSize" type="button">サイズ更新</button>
+            <button id="exportImage" type="button">PNG出力</button>
+          </div>
+          <div class="panel-section canvas-wrapper">
+            <canvas id="editorCanvas" width="512" height="512"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/createEditorState.js"></script>
+    <script src="js/setupTabs.js"></script>
+    <script src="js/loadImageFile.js"></script>
+    <script src="js/addCanvasObject.js"></script>
+    <script src="js/renderCanvas.js"></script>
+    <script src="js/updateObjectList.js"></script>
+    <script src="js/renderObjectDetails.js"></script>
+    <script src="js/selectObject.js"></script>
+    <script src="js/updateObjectProperty.js"></script>
+    <script src="js/reorderObject.js"></script>
+    <script src="js/duplicateObject.js"></script>
+    <script src="js/deleteObject.js"></script>
+    <script src="js/exportCanvasImage.js"></script>
+    <script src="js/attachCanvasInteractions.js"></script>
+    <script src="js/showToast.js"></script>
+    <script src="js/updateCanvasSize.js"></script>
+    <script src="js/applyCanvasDisplayScale.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
