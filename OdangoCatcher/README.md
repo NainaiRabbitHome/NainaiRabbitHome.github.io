@@ -20,6 +20,18 @@ OdangoCatcher
     - full_container.png (おだんごが15個以上の状態)
 
  - js (処理をするjsファイル群)
+    - createLayout.js
+    - initGameState.js
+    - registerKeyboard.js
+    - registerTouchButtons.js
+    - resetGameState.js
+    - spawnOdango.js
+    - startGameLogic.js
+    - updateBackground.js
+    - updateContainerImage.js
+    - updateDrops.js
+    - updateHud.js
+    - updateRabbitAnimation.js
 
 ## 要件定義
  - アニメーションについて
