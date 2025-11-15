@@ -10,46 +10,68 @@
   function attachCanvasInteractions({ state, onSelect, onUpdate }) {
     const { canvas } = state;
 
-    canvas.addEventListener('pointerdown', (event) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const target = findTopObject(state.objects, x, y);
-      if (!target) {
+    canvas.addEventListener(
+      'pointerdown',
+      (event) => {
+        event.preventDefault();
+        const { x, y } = translatePointerPosition(canvas, event);
+        const target = findTopObject(state.objects, x, y);
+        if (!target) {
+          state.dragSession = null;
+          return;
+        }
+        onSelect(target.id);
+        state.dragSession = {
+          id: target.id,
+          pointerX: x,
+          pointerY: y,
+          startX: target.x,
+          startY: target.y,
+        };
+        canvas.setPointerCapture(event.pointerId);
+      },
+      { passive: false }
+    );
+
+    canvas.addEventListener(
+      'pointermove',
+      (event) => {
+        if (!state.dragSession) return;
+        event.preventDefault();
+        const { x, y } = translatePointerPosition(canvas, event);
+        const object = state.objects.find((item) => item.id === state.dragSession.id);
+        if (!object) return;
+        const dx = x - state.dragSession.pointerX;
+        const dy = y - state.dragSession.pointerY;
+        object.x = state.dragSession.startX + dx;
+        object.y = state.dragSession.startY + dy;
+        onUpdate();
+      },
+      { passive: false }
+    );
+
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((type) => {
+      canvas.addEventListener(type, (event) => {
+        if (state.dragSession) {
+          try {
+            canvas.releasePointerCapture(event.pointerId);
+          } catch (error) {
+            console.debug('Pointer capture release skipped:', error);
+          }
+        }
         state.dragSession = null;
-        return;
-      }
-      onSelect(target.id);
-      state.dragSession = {
-        id: target.id,
-        pointerX: x,
-        pointerY: y,
-        startX: target.x,
-        startY: target.y,
-      };
-      canvas.setPointerCapture(event.pointerId);
+      });
     });
+  }
 
-    canvas.addEventListener('pointermove', (event) => {
-      if (!state.dragSession) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const object = state.objects.find((item) => item.id === state.dragSession.id);
-      if (!object) return;
-      const dx = x - state.dragSession.pointerX;
-      const dy = y - state.dragSession.pointerY;
-      object.x = state.dragSession.startX + dx;
-      object.y = state.dragSession.startY + dy;
-      onUpdate();
-    });
-
-    canvas.addEventListener('pointerup', (event) => {
-      if (state.dragSession) {
-        canvas.releasePointerCapture(event.pointerId);
-      }
-      state.dragSession = null;
-    });
+  function translatePointerPosition(canvas, event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+      x: (event.clientX - rect.left) * scaleX,
+      y: (event.clientY - rect.top) * scaleY,
+    };
   }
 
   function findTopObject(objects, x, y) {
